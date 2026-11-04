@@ -330,6 +330,55 @@
           scroll-behavior: auto;
         }
       }
+      pre {
+        position: relative;
+        padding: 42px 16px 16px 0;
+        counter-reset: line;
+      }
+
+      pre code {
+        display: block;
+      }
+
+      pre code .code-line {
+        display: block;
+        min-height: 1.6em;
+        padding-left: 4.5em;
+        position: relative;
+        white-space: pre;
+      }
+
+      pre code .code-line::before {
+        position: absolute;
+        left: 0;
+        width: 3.4em;
+        padding-right: 0.8em;
+        border-right: 1px solid rgba(242, 240, 232, 0.12);
+        color: #777b6e;
+        text-align: right;
+        counter-increment: line;
+        content: counter(line);
+        user-select: none;
+      }
+
+      .copy-button {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        padding: 6px 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface-light);
+        color: var(--text);
+        font: inherit;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .copy-button:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
     </style>
   </head>
 
@@ -561,6 +610,40 @@ git push</code></pre>
 
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
+      document.querySelectorAll("pre code").forEach((code) => {
+        const originalCode = code.textContent.replace(/\n$/, "");
+        const lines = originalCode.split("\n");
+
+        code.replaceChildren();
+
+        lines.forEach((line) => {
+          const lineElement = document.createElement("span");
+          lineElement.className = "code-line";
+          lineElement.textContent = line || " ";
+          code.appendChild(lineElement);
+        });
+
+        const button = document.createElement("button");
+        button.className = "copy-button";
+        button.type = "button";
+        button.textContent = "Copiar";
+        button.setAttribute("aria-label", "Copiar código");
+
+        button.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(originalCode);
+            button.textContent = "¡Copiado!";
+          } catch {
+            button.textContent = "No se pudo copiar";
+          }
+
+          setTimeout(() => {
+            button.textContent = "Copiar";
+          }, 1800);
+        });
+
+        code.parentElement.appendChild(button);
+      });
     </script>
   </body>
 </html>
