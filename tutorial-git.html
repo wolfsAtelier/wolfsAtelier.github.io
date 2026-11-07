@@ -9,383 +9,14 @@
       content="Tutorial básico de Git: crea un repositorio, guarda cambios y trabaja con ramas."
     />
     <title>Git desde cero — Wolf's Atelier</title>
-
-    <style>
-      :root {
-        color-scheme: dark;
-        --bg: #111310;
-        --surface: #191c17;
-        --surface-light: #20241d;
-        --text: #f2f0e8;
-        --muted: #aaa99e;
-        --accent: #d5f36a;
-        --line: rgba(242, 240, 232, 0.12);
-        --max-width: 900px;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        scroll-behavior: smooth;
-        scroll-padding-top: 90px;
-      }
-
-      body {
-        margin: 0;
-        background:
-          radial-gradient(
-            ellipse at 75% 0%,
-            rgba(146, 177, 59, 0.12),
-            transparent 32rem
-          ),
-          var(--bg);
-        color: var(--text);
-        font-family:
-          Inter,
-          ui-sans-serif,
-          system-ui,
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          sans-serif;
-        line-height: 1.7;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      a:focus-visible {
-        outline: 2px solid var(--accent);
-        outline-offset: 4px;
-      }
-
-      .wrap {
-        width: min(var(--max-width), calc(100% - 40px));
-        margin-inline: auto;
-      }
-
-      header {
-        position: sticky;
-        top: 0;
-        z-index: 5;
-        background: rgba(17, 19, 16, 0.9);
-        border-bottom: 1px solid var(--line);
-        backdrop-filter: blur(16px);
-      }
-
-      .nav {
-        min-height: 72px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 11px;
-        font-weight: 750;
-        letter-spacing: -0.04em;
-      }
-
-      .brand-mark {
-        width: 34px;
-        height: 34px;
-        display: grid;
-        place-items: center;
-        border-radius: 11px;
-        background: var(--accent);
-        color: #171a12;
-      }
-
-      .back-link {
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .back-link:hover {
-        color: var(--accent);
-      }
-
-      main {
-        padding-block: 60px 90px;
-      }
-
-      .eyebrow {
-        color: var(--accent);
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-      }
-
-      h1,
-      h2,
-      h3 {
-        line-height: 1.2;
-      }
-
-      h1 {
-        max-width: 780px;
-        margin: 14px 0 18px;
-        font-size: clamp(42px, 8vw, 72px);
-        letter-spacing: -0.07em;
-      }
-
-      h1 span {
-        color: var(--accent);
-      }
-
-      .intro {
-        max-width: 680px;
-        color: var(--muted);
-        font-size: 18px;
-      }
-
-      .meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 24px;
-      }
-
-      .tag {
-        padding: 5px 10px;
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        color: var(--muted);
-        font-size: 11px;
-      }
-
-      .toc,
-      .note,
-      .step {
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        background: var(--surface);
-      }
-
-      .toc {
-        margin: 34px 0 55px;
-        padding: 24px;
-      }
-
-      .toc h2 {
-        margin: 0 0 12px;
-        font-size: 17px;
-      }
-
-      .toc ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px 20px;
-        margin: 0;
-        padding-left: 18px;
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .toc a:hover {
-        color: var(--accent);
-      }
-
-      article > section {
-        margin: 48px 0;
-        scroll-margin-top: 95px;
-      }
-
-      article h2 {
-        margin-bottom: 14px;
-        font-size: clamp(25px, 4vw, 34px);
-        letter-spacing: -0.045em;
-      }
-
-      article h3 {
-        margin: 24px 0 8px;
-        font-size: 18px;
-      }
-
-      article p,
-      article li {
-        color: var(--muted);
-      }
-
-      article strong {
-        color: var(--text);
-      }
-
-      .step {
-        margin: 18px 0;
-        padding: 22px;
-      }
-
-      .step h3 {
-        margin-top: 0;
-      }
-
-      pre {
-        overflow-x: auto;
-        margin: 14px 0 0;
-        padding: 17px;
-        border: 1px solid rgba(213, 243, 106, 0.12);
-        border-radius: 12px;
-        background: #10120f;
-        color: var(--accent);
-        font-size: 13px;
-        line-height: 1.6;
-      }
-
-      code {
-        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      }
-
-      p code,
-      li code {
-        padding: 2px 5px;
-        border-radius: 5px;
-        background: rgba(213, 243, 106, 0.09);
-        color: var(--accent);
-        font-size: 0.9em;
-      }
-
-      .note {
-        margin: 22px 0;
-        padding: 20px 22px;
-        border-color: rgba(213, 243, 106, 0.24);
-        background: linear-gradient(
-          120deg,
-          rgba(213, 243, 106, 0.08),
-          var(--surface)
-        );
-      }
-
-      .note strong {
-        color: var(--accent);
-      }
-
-      .flow {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 10px;
-        margin: 22px 0;
-      }
-
-      .flow span {
-        padding: 8px 12px;
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        background: var(--surface);
-        color: var(--text);
-        font-family: ui-monospace, monospace;
-        font-size: 13px;
-      }
-
-      .flow b {
-        color: var(--accent);
-      }
-
-      .finish {
-        margin-top: 50px;
-        padding: 26px;
-        border: 1px solid rgba(213, 243, 106, 0.25);
-        border-radius: 20px;
-        background: linear-gradient(
-          120deg,
-          rgba(213, 243, 106, 0.1),
-          var(--surface)
-        );
-      }
-
-      .finish h2 {
-        margin-top: 0;
-      }
-
-      footer {
-        padding-block: 24px;
-        border-top: 1px solid var(--line);
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      @media (max-width: 600px) {
-        .nav {
-          min-height: 64px;
-        }
-        main {
-          padding-top: 42px;
-        }
-        .toc ul {
-          display: block;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
-      }
-      pre {
-        position: relative;
-        padding: 42px 16px 16px 0;
-        counter-reset: line;
-      }
-
-      pre code {
-        display: block;
-      }
-
-      pre code .code-line {
-        display: block;
-        min-height: 1.6em;
-        padding-left: 4.5em;
-        position: relative;
-        white-space: pre;
-      }
-
-      pre code .code-line::before {
-        position: absolute;
-        left: 0;
-        width: 3.4em;
-        padding-right: 0.8em;
-        border-right: 1px solid rgba(242, 240, 232, 0.12);
-        color: #777b6e;
-        text-align: right;
-        counter-increment: line;
-        content: counter(line);
-        user-select: none;
-      }
-
-      .copy-button {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        padding: 6px 10px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: var(--surface-light);
-        color: var(--text);
-        font: inherit;
-        font-size: 12px;
-        cursor: pointer;
-      }
-
-      .copy-button:hover {
-        border-color: var(--accent);
-        color: var(--accent);
-      }
-    </style>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="assets/js/main.js" defer></script>
   </head>
 
-  <body>
-    <header>
+  <body class="tutorial-page">
+    <header class="site-header">
       <div class="wrap nav">
-        <a class="brand" href="index.html">
+        <a class="brand" href="index.html" aria-label="Wolf's Atelier, inicio">
           <span class="brand-mark">W</span>
           <span>Wolf's Atelier</span>
         </a>
@@ -395,19 +26,20 @@
       </div>
     </header>
 
-    <main class="wrap">
-      <span class="eyebrow">Tutorial · Git</span>
-      <h1>Git desde <span>cero</span></h1>
-      <p class="intro">
-        Aprende el flujo esencial para iniciar un repositorio, guardar cambios
-        con commits y enviarlos a GitHub.
-      </p>
-
-      <div class="meta">
-        <span class="tag">Nivel inicial</span>
-        <span class="tag">Terminal</span>
-        <span class="tag">Aproximadamente 10 minutos</span>
-      </div>
+    <main class="wrap tutorial-main">
+      <section class="tutorial-hero">
+        <span class="eyebrow">Tutorial · Git</span>
+        <h1>Git desde <span>cero</span></h1>
+        <p class="intro">
+          Aprende el flujo esencial para iniciar un repositorio, guardar cambios
+          con commits y enviarlos a GitHub.
+        </p>
+        <div class="meta">
+          <span class="tag">Nivel inicial</span>
+          <span class="tag">Terminal</span>
+          <span class="tag">Aproximadamente 10 minutos</span>
+        </div>
+      </section>
 
       <nav class="toc" aria-label="Contenido del tutorial">
         <h2>En esta guía</h2>
@@ -421,8 +53,9 @@
         </ul>
       </nav>
 
-      <article>
+      <article class="tutorial-content">
         <section id="conceptos">
+          <span class="eyebrow">01 — Fundamentos</span>
           <h2>¿Qué es Git?</h2>
           <p>
             Git es un sistema de control de versiones: registra cambios en los
@@ -435,11 +68,9 @@
             historial. Antes de crear un commit, eliges qué cambios incluir con
             <code>git add</code>.
           </p>
-
           <div class="flow" aria-label="Flujo de trabajo de Git">
-            <span>Archivos</span><b>→</b> <span>git add</span><b>→</b>
-            <span>git commit</span><b>→</b>
-            <span>git push</span>
+            <span>Archivos</span><b>→</b><span>git add</span><b>→</b>
+            <span>git commit</span><b>→</b><span>git push</span>
           </div>
           <p>
             Los primeros pasos guardan cambios en tu computadora. El último,
@@ -448,47 +79,40 @@
         </section>
 
         <section id="configuracion">
-          <h2>1. Configura tu nombre y correo</h2>
+          <span class="eyebrow">02 — Preparación</span>
+          <h2>Configura tu nombre y correo</h2>
           <p>
             Git usa esta información como autor de tus commits. Configúrala una
             sola vez en tu computadora, reemplazando los ejemplos por tus datos:
           </p>
-
-          <div class="step">
-            <pre><code>git config --global user.name "Tu Nombre"
+          <pre><code>git config --global user.name "Tu Nombre"
 git config --global user.email "tu-correo@example.com"</code></pre>
-          </div>
-
           <p>Para comprobar la configuración:</p>
           <pre><code>git config --global --list</code></pre>
         </section>
 
         <section id="repositorio">
-          <h2>2. Crea un repositorio</h2>
+          <span class="eyebrow">03 — Inicio</span>
+          <h2>Crea un repositorio</h2>
           <p>En la terminal, entra a la carpeta de tu proyecto. Por ejemplo:</p>
           <pre><code>cd ruta/a/mi-proyecto</code></pre>
-
           <p>Inicializa Git en esa carpeta:</p>
           <pre><code>git init</code></pre>
-
-          <p>
-            Ahora Git comenzará a seguir el proyecto. Puedes revisar el estado
-            de los archivos con:
-          </p>
+          <p>Revisa el estado de los archivos con:</p>
           <pre><code>git status</code></pre>
-
-          <div class="note">
+          <aside class="note">
             <strong>Consejo:</strong> usa <code>git status</code> con
             frecuencia. Te indica qué archivos cambiaron y cuáles están
             preparados para el siguiente commit.
-          </div>
+          </aside>
         </section>
 
         <section id="guardar">
-          <h2>3. Guarda tu primer cambio</h2>
+          <span class="eyebrow">04 — Historial</span>
+          <h2>Guarda tu primer cambio</h2>
           <p>
             Crea o modifica un archivo dentro del proyecto. Después, prepara el
-            archivo para el commit y guarda los cambios en el historial:
+            archivo para el commit y guarda los cambios en el historial.
           </p>
 
           <div class="step">
@@ -496,8 +120,8 @@ git config --global user.email "tu-correo@example.com"</code></pre>
             <pre><code>git add README.md</code></pre>
             <p>
               Cambia <code>README.md</code> por el nombre del archivo que
-              modificaste. Para preparar todos los cambios del proyecto, puedes
-              usar <code>git add .</code>.
+              modificaste. Para preparar todos los cambios, puedes usar
+              <code>git add .</code>.
             </p>
           </div>
 
@@ -515,81 +139,71 @@ git config --global user.email "tu-correo@example.com"</code></pre>
         </section>
 
         <section id="github">
-          <h2>4. Envía los cambios a GitHub</h2>
+          <span class="eyebrow">05 — Repositorio remoto</span>
+          <h2>Envía los cambios a GitHub</h2>
           <p>
-            Crea primero un repositorio vacío en GitHub. GitHub te mostrará la
-            dirección del repositorio; cópiala y úsala en el siguiente comando:
+            Crea primero un repositorio en GitHub. Copia su dirección y úsala en
+            el siguiente comando:
           </p>
-
           <pre><code>git remote add origin https://github.com/USUARIO/REPOSITORIO.git</code></pre>
-
           <p>
             Reemplaza <code>USUARIO</code> y <code>REPOSITORIO</code> por los
-            valores de tu repositorio. Luego, publica la rama local:
+            valores de tu repositorio. Luego publica la rama local:
           </p>
-
           <pre><code>git branch -M main
 git push -u origin main</code></pre>
-
-          <div class="note">
-            <strong>Importante:</strong> hacer un commit guarda el cambio en tu
+          <aside class="note">
+            <strong>Importante:</strong> un commit guarda el cambio en tu
             repositorio local. <code>git push</code> publica los commits en el
             remoto. La primera vez, GitHub puede pedirte autenticarte.
-          </div>
-
-          <p>
-            En los siguientes cambios, el flujo habitual será preparar, guardar
-            y publicar:
-          </p>
+          </aside>
+          <p>En los siguientes cambios, el flujo habitual será:</p>
           <pre><code>git add .
 git commit -m "Describe el cambio"
 git push</code></pre>
-          <p>
-            <code>git push</code> envía los commits de tu rama local al
-            repositorio remoto configurado. <citation src="1"></citation>
-          </p>
         </section>
 
         <section id="ramas">
-          <h2>5. Trabaja con ramas</h2>
+          <span class="eyebrow">06 — Desarrollo</span>
+          <h2>Trabaja con ramas</h2>
           <p>
             Una rama te permite trabajar en cambios sin modificar directamente
             la rama principal. Crea y cambia a una rama nueva con:
           </p>
-
           <pre><code>git switch -c nombre-de-mi-rama</code></pre>
-
           <p>
             Cuando termines, guarda los cambios con <code>git add</code> y
             <code>git commit</code>. Para volver a la rama principal:
           </p>
-
           <pre><code>git switch main</code></pre>
-
           <p>Para listar las ramas locales:</p>
           <pre><code>git branch</code></pre>
         </section>
 
         <section>
+          <span class="eyebrow">Repaso</span>
           <h2>Comandos para recordar</h2>
-          <ul>
-            <li><code>git status</code>: revisa el estado de los archivos.</li>
+          <ul class="command-list">
+            <li><code>git status</code> — revisa el estado de los archivos.</li>
             <li>
-              <code>git add archivo</code>: prepara un archivo para el commit.
+              <code>git add archivo</code> — prepara un archivo para el commit.
             </li>
             <li>
-              <code>git commit -m "mensaje"</code>: registra los cambios
+              <code>git commit -m "mensaje"</code> — registra los cambios
               preparados.
             </li>
             <li>
-              <code>git log --oneline</code>: consulta el historial resumido.
+              <code>git log --oneline</code> — consulta el historial resumido.
             </li>
-            <li><code>git pull</code>: trae cambios del repositorio remoto.</li>
-            <li><code>git push</code>: publica tus commits en el remoto.</li>
+            <li>
+              <code>git pull</code> — trae cambios del repositorio remoto.
+            </li>
+            <li><code>git push</code> — publica tus commits en el remoto.</li>
           </ul>
         </section>
 
-        <div class="finish">
+        <aside class="finish">
+          <span class="eyebrow">Siguiente paso</span>
           <h2>¡Listo para empezar!</h2>
           <p>
             Ya conoces el ciclo básico: revisa el estado, prepara los cambios,
@@ -597,53 +211,18 @@ git push</code></pre>
             primero en un proyecto de prueba para familiarizarte con los
             comandos.
           </p>
-          <a class="back-link" href="index.html#tutoriales"
+          <a class="button primary" href="index.html#tutoriales"
             >← Volver a Wolf's Atelier</a
           >
-        </div>
+        </aside>
       </article>
     </main>
 
     <footer>
-      <div class="wrap">© <span id="year"></span> Wolf's Atelier</div>
+      <div class="wrap footer-inner">
+        <span>© <span id="year"></span> Wolf's Atelier</span>
+        <a href="index.html">Volver al inicio ↑</a>
+      </div>
     </footer>
-
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-      document.querySelectorAll("pre code").forEach((code) => {
-        const originalCode = code.textContent.replace(/\n$/, "");
-        const lines = originalCode.split("\n");
-
-        code.replaceChildren();
-
-        lines.forEach((line) => {
-          const lineElement = document.createElement("span");
-          lineElement.className = "code-line";
-          lineElement.textContent = line || " ";
-          code.appendChild(lineElement);
-        });
-
-        const button = document.createElement("button");
-        button.className = "copy-button";
-        button.type = "button";
-        button.textContent = "Copiar";
-        button.setAttribute("aria-label", "Copiar código");
-
-        button.addEventListener("click", async () => {
-          try {
-            await navigator.clipboard.writeText(originalCode);
-            button.textContent = "¡Copiado!";
-          } catch {
-            button.textContent = "No se pudo copiar";
-          }
-
-          setTimeout(() => {
-            button.textContent = "Copiar";
-          }, 1800);
-        });
-
-        code.parentElement.appendChild(button);
-      });
-    </script>
   </body>
 </html>
