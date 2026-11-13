@@ -77,7 +77,7 @@ p {
   z-index: 25;
   top: 12px;
   left: 12px;
-  width: auto;
+  width: 15%;
   border: 2px outset #e5e6ed;
   background: linear-gradient(#f0f0f4, #c5c8d4);
   box-shadow: 2px 3px 8px rgba(22, 25, 40, 0.28);
