@@ -89,3 +89,69 @@ document.querySelectorAll("pre code").forEach((code) => {
 
   pre.appendChild(button);
 });
+
+/* Controles de ventanas estilo CDE */
+document.querySelectorAll(".cde-window").forEach((windowElement) => {
+  const title =
+    windowElement.querySelector("h2")?.textContent.trim() || "Wolf's Atelier";
+
+  const titlebar = document.createElement("div");
+  titlebar.className = "cde-titlebar";
+
+  const titleText = document.createElement("span");
+  titleText.className = "cde-title";
+  titleText.textContent = title;
+
+  const controls = document.createElement("div");
+  controls.className = "cde-controls";
+
+  const makeButton = (label, action, accessibleName) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = label;
+    button.setAttribute("aria-label", accessibleName);
+    button.title = accessibleName;
+    button.addEventListener("click", action);
+    controls.appendChild(button);
+    return button;
+  };
+
+  makeButton(
+    "—",
+    () => {
+      windowElement.classList.toggle("is-minimized");
+    },
+    "Minimizar ventana",
+  );
+
+  makeButton(
+    "□",
+    () => {
+      windowElement.classList.toggle("is-maximized");
+    },
+    "Maximizar o restaurar ventana",
+  );
+
+  makeButton(
+    "×",
+    () => {
+      windowElement.hidden = true;
+    },
+    "Cerrar ventana",
+  );
+
+  titlebar.append(titleText, controls);
+  windowElement.prepend(titlebar);
+});
+
+/* Los enlaces del Dock restauran la ventana correspondiente. */
+document.querySelectorAll(".cde-dock a[href^='#']").forEach((link) => {
+  link.addEventListener("click", () => {
+    const target = document.querySelector(link.getAttribute("href"));
+
+    if (target?.classList.contains("cde-window")) {
+      target.hidden = false;
+      target.classList.remove("is-minimized", "is-maximized");
+    }
+  });
+});

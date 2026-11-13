@@ -14,25 +14,33 @@
   </head>
 
   <body>
-    <header class="site-header">
+    <header class="site-header cde-panel">
       <div class="wrap nav">
         <a class="brand" href="#inicio" aria-label="Wolf's Atelier, inicio">
           <span class="brand-mark">W</span>
           <span>Wolf's Atelier</span>
         </a>
-
-        <nav aria-label="Navegación principal">
-          <a href="#acerca">Acerca de</a>
-          <a href="#perfil">Perfil</a>
-          <a href="#software">Software</a>
-          <a href="#proyectos">Proyectos</a>
-          <a href="#tutoriales">Tutoriales</a>
-        </nav>
       </div>
     </header>
+    <nav class="cde-dock" aria-label="Navegación principal">
+      <a href="#inicio" title="Inicio"><span>⌂</span><small>Inicio</small></a>
+      <a href="#acerca" title="Acerca de"
+        ><span>ℹ</span><small>Acerca</small></a
+      >
+      <a href="#perfil" title="Perfil"><span>♙</span><small>Perfil</small></a>
+      <a href="#software" title="Software"
+        ><span>⚙</span><small>Software</small></a
+      >
+      <a href="#proyectos" title="Proyectos"
+        ><span>▧</span><small>Proyectos</small></a
+      >
+      <a href="#tutoriales" title="Tutoriales"
+        ><span>▤</span><small>Tutoriales</small></a
+      >
+    </nav>
 
     <main>
-      <section class="hero" id="inicio">
+      <section class="hero cde-window" id="inicio">
         <div class="hero-backdrop" aria-hidden="true"></div>
         <div class="hero-overlay" aria-hidden="true"></div>
 
@@ -61,7 +69,7 @@
       </section>
 
       <div class="wrap">
-        <section id="acerca" class="section reveal from-right">
+        <section id="acerca" class="section reveal from-right cde-window">
           <div class="section-head">
             <div>
               <span class="eyebrow">El taller</span>
@@ -96,7 +104,7 @@
           </div>
         </section>
 
-        <section id="perfil" class="section">
+        <section id="perfil" class="section cde-window">
           <div class="section-head">
             <div>
               <span class="eyebrow">Detrás del taller</span>
@@ -123,7 +131,7 @@
           </div>
         </section>
 
-        <section id="software" class="section">
+        <section id="software" class="section cde-window">
           <div class="section-head">
             <div>
               <span class="eyebrow">Herramientas</span>
@@ -183,7 +191,7 @@
           </div>
         </section>
 
-        <section id="proyectos" class="section">
+        <section id="proyectos" class="section cde-window">
           <div class="section-head">
             <div>
               <span class="eyebrow">En construcción</span>
@@ -242,7 +250,7 @@
           </div>
         </section>
 
-        <section id="tutoriales" class="section">
+        <section id="tutoriales" class="section cde-window">
           <div class="section-head">
             <div>
               <span class="eyebrow">Notas y guías</span>
